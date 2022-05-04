@@ -1,0 +1,9 @@
+LICENSE.txt
+README.md
+setup.py
+hello_world/__init__.py
+hello_world/main.py
+hello_world_olegk.egg-info/PKG-INFO
+hello_world_olegk.egg-info/SOURCES.txt
+hello_world_olegk.egg-info/dependency_links.txt
+hello_world_olegk.egg-info/top_level.txt

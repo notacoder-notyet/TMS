@@ -1,0 +1,15 @@
+Metadata-Version: 2.1
+Name: hello-world-olegk
+Version: 0.0.1
+Summary: A Hello World package
+Home-page: https://github.com
+Author: Oleg K
+Author-email: ok@pochta.pochta
+License: UNKNOWN
+Platform: UNKNOWN
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+
+test
+
