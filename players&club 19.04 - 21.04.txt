@@ -1,0 +1,27 @@
+CREATE TABLE players( player_id INTEGER PRIMARY KEY, name TEXT NOT NULL, surname TEXT NOT NULL, age INTEGER NOT NULL, nationality TEXT NOT NULL, club_id INTEGER NOT NULL);
+
+INSERT INTO players(name, surname, age, nationality, club_id) VALUES ("Nikola", "Karabatic", 38, "Serbia", 1), ("Mikkel", "Hansen", 34, "Denmark", 1), ("Alex", "Dujshebaev", 29, "Spain", 2), ("Artem", "Karalec", 26, "Belarus", 2);
+
+SELECT * FROM players;
+
+
+CREATE TABLE clubs(club_id INTEGER PRIMARY KEY, club_name TEXT NOT NULL, country TEXT NOT NULL, FOREIGN KEY (club_id) REFERENCES players(club_id));
+
+INSERT INTO clubs(club_name, country) VALUES  ("Paris Saint-Germain", "France"), ("Vive Kielce", "Poland");
+
+SELECT player_id, name, surname, age, nationality, C.club_name, C.country FROM players JOIN clubs C ON players.club_id == C.club_id;
+
+
+CREATE TABLE tituls(titul_id INTEGER PRIMARY KEY, titul_name TEXT NOT NULL);
+
+INSERT INTO tituls(titul_name) VALUES  ("CM"), ("CE");
+
+
+CREATE TABLE tituls_clubs(titul_club_id INTEGER PRIMARY KEY, titul_id INTEGER, club_id INTEGER, year INTEGER, FOREIGN KEY (club_id) REFERENCES clubs(club_id), FOREIGN KEY (titul_id) REFERENCES tituls(titul_id));
+
+INSERT INTO tituls_clubs(titul_id, club_id, year) VALUES (1, 1, 2014), (1, 2, 2016), (1, 1, 2015);
+
+SELECT clubs.club_name, tituls.titul_name, year FROM tituls_clubs JOIN clubs, tituls WHERE tituls_clubs.club_id == clubs.club_id AND tituls_clubs.titul_id == tituls.titul_id;
+
+SELECT * FROM players LEFT JOIN club;
+
