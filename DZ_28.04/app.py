@@ -17,7 +17,7 @@ class Article(db.Model):
     date = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
-        return f'<Article %r>' % self.id
+        return '<Article %r>' % self.id
         
 
 @app.route('/')
@@ -26,7 +26,7 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/create-article', methods=('GET', 'POST'))
+@app.route('/create-article', methods=('POST', 'GET'))
 def create_article():
     if request.method == "POST":
         title = request.form['title']
@@ -38,8 +38,8 @@ def create_article():
             db.session.add(article)
             db.session.commit()
             return redirect('/')
-        except Exception as error:
-            return f"При добавлении статьи произошла ошибка. Ошибка : {error}"
+        except:
+            return "При добавлении статьи произошла ошибка"
 
     else:
         return render_template("create-article.html")
