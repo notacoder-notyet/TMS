@@ -1,5 +1,10 @@
 Flask==2.1.2
+<<<<<<< HEAD
 Flask-SQLAlchemy==2.5.1
 python-dotenv==0.20.0
+=======
+SQLAlchemy==1.4.36
+Flask-SQLAlchemy==2.5.1
+>>>>>>> parent of d9d9c93 (comm)
 
 
