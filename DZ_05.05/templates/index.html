@@ -1,21 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1 class="title">{% block title %} Members {% endblock %}</h1>
+    <h1 class="title">{% block title %} Events {% endblock %}</h1>
     <div class="content">
-        {% for member in members %}
-            <div class="member">
-                <p><b>#{{ member.id }}</b></p>
+        {% for event in events %}
+            <div class="event">
+                <p><b>#{{ event.id }}</b></p>
                 <b>
                     <p class="name">
-                        <a href="{{ url_for('member', member_id=member.id)}}">
-                            {{ member.firstname }} {{ member.lastname }}
+                        <a href="{{ url_for('events', event_id=event.id)}}">
+                            {{ event.event_name }} {{ event.event_data }}
                         </a>
                     </p>
                 </b>
-                <p>{{ member.email }}</p>
-                <p>{{ member.age }} years old.</p>
-                <p>Joined: {{ member.created_at }}</p>
+                <p>{{ event.info }}</p>
             </div>
         {% endfor %}
     </div>
