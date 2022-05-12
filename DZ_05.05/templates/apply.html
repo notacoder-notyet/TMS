@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 style="width: 100%">{% block title %} Add a New Member {% endblock %}</h1>
+    <form method="post">
+        <p>
+            <label for="first_name">First Name</label>
+            <input type="text" name="first_name"
+                   placeholder="First name">
+            </input>
+        </p>
+
+        <p>
+            <label for="last_name">Last Name</label>
+            <input type="text" name="last_name"
+                   placeholder="Last name">
+            </input>
+        </p>
+
+        <p>
+            <label for="email">Email</label>
+            <input type="email" name="email"
+                   placeholder="Member email">
+            </input>
+        </p>
+
+        <p>
+            <label for="age">Age</label>
+            <input type="number" name="age"
+                   placeholder="Age">
+            </input>
+        </p>
+
+        <p>
+            <label for="event">Event</label>
+            <input type="number" name="event"
+                   placeholder="Event">
+            </input>
+        </p>
+
+        <p>
+            <button type="submit">Submit</button>
+        </p>
+    </form>
+{% endblock %}
