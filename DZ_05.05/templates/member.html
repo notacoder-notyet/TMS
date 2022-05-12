@@ -2,17 +2,16 @@
 
 {% block content %}
     <span class="title">
-        <h1>{% block title %} {{ member.firstname }} {{ member.lastname }}{% endblock %}</h1>
+        <h1>{% block title %} {{ member.first_name }} {{ member.last_name }}{% endblock %}</h1>
     </span>
     <div class="content">
             <div class="member">
                 <p><b>#{{ member.id }}</b></p>
                 <b>
-                    <p class="name">{{ member.firstname }} {{ member.lastname }}</p>
+                    <p class="name">{{ member.first_name }} {{ member.last_name }}</p>
                 </b>
                 <p>{{ member.email }}</p>
                 <p>{{ member.age }} years old.</p>
-                <p>Joined: {{ member.created_at }}</p>
             </div>
     </div>
 {% endblock %}

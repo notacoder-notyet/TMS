@@ -27,12 +27,12 @@ def index():
 @app.route('/аpply-to-<int:event_id>', methods=('GET', 'POST'), endpoint='apply')
 def apply():
     if request.method == 'POST':
-        firstname = request.form['firstname']
-        lastname = request.form['lastname']
+        first_name = request.form['firstname']
+        last_name = request.form['lastname']
         email = request.form['email']
         age = int(request.form['age'])
-        member = Member(firstname=firstname,
-                          lastname=lastname,
+        member = Member(firstname=first_name,
+                          lastname=last_name,
                           email=email,
                           age=age)
         # eventname = request.form['event']            

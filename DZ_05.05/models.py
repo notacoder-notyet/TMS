@@ -20,8 +20,8 @@ event_member = db.Table('event_member',
 class Member(db.Model):
     __tablename__ = 'members'
     id = db.Column(db.Integer, primary_key=True)
-    firstname = db.Column(db.String(100), nullable=False)
-    lastname = db.Column(db.String(100), nullable=False)
+    first_name = db.Column(db.String(100), nullable=False)
+    last_name = db.Column(db.String(100), nullable=False)
     age = db.Column(db.Integer, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     membership = db.relationship("Event", secondary=event_member, backref='memberships')
