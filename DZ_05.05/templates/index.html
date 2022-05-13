@@ -8,12 +8,12 @@
                 <p><b>#{{ event.id }}</b></p>
                 <b>
                     <p class="name">
-                        <a href="{{ url_for('events', event_id=event.id)}}">
+                        <a href="{{ url_for('members', event_id=event.id)}}">
                             {{ event.event_name }} {{ event.event_data }}
                         </a>
                     </p>
                 </b>
-                <p>{{ event.info }}</p>
+                <p>{{ event.event_info }}</p>
             </div>
         {% endfor %}
     </div>

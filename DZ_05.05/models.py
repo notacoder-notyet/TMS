@@ -27,7 +27,7 @@ class Member(db.Model):
     membership = db.relationship("Event", secondary=event_member, backref='memberships')
 
     def __repr__(self) -> str:
-        return f'<Member {self.firstname}>'
+        return f'<Member {self.first_name}>'
 
 
 class Event(db.Model):
@@ -41,14 +41,14 @@ class Event(db.Model):
         return f'<Event {self.event_name}>'
 
 # db.create_all() #была тут только для однократного создания таблицы, т.к. в консоли плевалась ошибками
-# oleg = Member(firstname='Oleg', lastname='Klykov', age=20, email='oleg@mail.ru')
-# neoleg = Member(firstname='neOleg', lastname='neKlykov', age=21, email='neOleg@mail.ru')
-# test = Member(firstname='Test', lastname='Test', age=100, email='test@mail.ru')
+# oleg = Member(first_name='Oleg', last_name='Klykov', age=20, email='oleg@mail.ru')
+# neoleg = Member(first_name='neOleg', last_name='neKlykov', age=21, email='neOleg@mail.ru')
+# test = Member(first_name='Test', last_name='Test', age=100, email='test@mail.ru')
 # event1 = Event(event_name='Event-1', event_info='Some Event-1')
 # event2 = Event(event_name='Event-2', event_info='Some Event-2')
 # db.session.add_all([oleg, neoleg, test, event1, event2])
 # # eventname = 'Event-1'
-# event = db.session.query(Event).filter(Event.event_name == 'Event-1').all()
+# event = db.session.query(Event).filter(Event.event_name == 'Event-1').first()
 # print(event)
-# # event.membership.append(oleg)
+# oleg.membership.append(event)
 # db.session.commit()
