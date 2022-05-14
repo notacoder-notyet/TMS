@@ -1,0 +1,28 @@
+{% block content %}
+    <h1 style="width: 100%">{% block title %} Add a New Post {% endblock %}</h1>
+    <form action="/create/" method="post">
+        <p>
+            <label for="nickname">Nickname</label>
+            <input type="text" name="nickname"
+                   placeholder="Nickname">
+            </input>
+        </p>
+
+        <p>
+            <label for="post_name">Post Name</label>
+            <input type="text" name="post_name"
+                   placeholder="Post name">
+            </input>
+        </p>
+
+        <p>
+            <label for="post_text">Post Text</label>
+            <input type="text" name="post_text"
+                   placeholder="Post Text">
+            </input>
+        </p>
+        <p>
+            <button type="submit">Create</button>
+        </p>
+    </form>
+{% endblock %}
