@@ -8,4 +8,6 @@ urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('post/<int:pk>/', views.PostVeiw.as_view(), name='post_view'),
     # path('post/create/'), views. ,name='create'),
+    # path('login/', login, name='login'),
+    # path('register/', RegisterUser.as_view(), name='register'),
 ]

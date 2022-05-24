@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='UTF-8'>
+    <title>Some blog</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel='stylesheet' href='{% static 'blog/css/styles.css'%}'>
+    {% comment %} <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script> {% endcomment %}
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1><a href="{% url 'blog:index' %}" title='Главная'>Some blog</a></h1>
+      <div> 
+        {% comment %} <p><a href="{% url 'blog:create' %}">Create post</a></p> {% endcomment %}
+      {% comment %} <li class='last'><a href="{% url 'register' %}"> Регистрация</a> | <a href="{% url 'login' %}"> Вход</a></li> {% endcomment %}
+      </header>
+    <div>
+      {% block content %}
+      {% endblock content %}
+    </div>
+  </body>
+</html>

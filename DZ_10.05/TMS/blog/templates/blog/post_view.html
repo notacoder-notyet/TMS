@@ -1,0 +1,11 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="post-entry">
+    <h1>{{ post.name }}</h1>
+    <p><h2>{{ post.text | linebreaks }}</h2></p>
+    <p>{{ post.pub_date }}</p>
+  </div>
+  <p><img src="images/1.jpg" alt="Альт" width="400" height="350"></p>
+{% endblock content %}
