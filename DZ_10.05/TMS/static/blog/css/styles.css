@@ -1,6 +1,5 @@
 body {
-    background-image: url('https://st.depositphotos.com/1081417/3255/i/450/depositphotos_32559001-stock-photo-blog.jpg');
-    background-size: 100%;
+    background-image: url('images/1.jpg') no-repeat;
     background-color: #b0aeb1;
 }
 
@@ -42,7 +41,7 @@ a {
 }
 
 .post-entry {
-    background: rgba(75, 90, 77, 0.6);
+    background: #1dca34;
     color: #f80e0e;
 }
 

@@ -7,15 +7,29 @@
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel='stylesheet' href='{% static 'blog/css/styles.css'%}'>
-    {% comment %} <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script> {% endcomment %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="{% static 'blog/images/samurai_ico.png' %}" type="image/png">
   </head>
   <body>
     <header>
-      <div class="container">
-        <h1><a href="{% url 'blog:index' %}" title='Главная'>Some blog</a></h1>
-      <div> 
-        {% comment %} <p><a href="{% url 'blog:create' %}">Create post</a></p> {% endcomment %}
-      {% comment %} <li class='last'><a href="{% url 'register' %}"> Регистрация</a> | <a href="{% url 'login' %}"> Вход</a></li> {% endcomment %}
+      <nav class="navbar navbar-expand-lg bg-dark">
+        <div class="container-fluid">
+          <h1><a href="{% url 'blog:index' %}" title='Главная' class='main'>
+            <img src="{% static 'blog/images/samurai.png' %}" alt="Logo" width="60" height="48">
+            Some blog
+          </a></h1>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <button type="button" class="btn btn-outline-primary bg-light">
+                <a href="#">Create post</a>
+              </button>
+              <ul class='last'>
+                <li><a href="#"> Регистрация</a></li>
+                <li><a href="#"> Вход</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </header>
     <div>
       {% block content %}
