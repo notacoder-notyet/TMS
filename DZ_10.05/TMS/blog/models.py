@@ -13,8 +13,8 @@ class Author(models.Model):
 
 
 class Post(models.Model):        
-    name = models.CharField(max_length=200)
-    text = models.CharField(max_length=200)
+    name = models.CharField(max_length=50)
+    text = models.CharField(max_length=1200)
     pub_date = models.DateTimeField('date published')
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
