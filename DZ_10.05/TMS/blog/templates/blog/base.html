@@ -20,9 +20,11 @@
           </a></h1>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
+              {% if request.user.is_authenticated %}
               <button type="button" class="btn btn-outline-primary bg-light">
-                <a href="#">Create post</a>
+                <a href="{% url 'blog:create_post' %}">Create post</a>
               </button>
+              {% endif %}
               <ul class='last'>
                 {% if request.user.is_authenticated %}
                 <li class='last'> {{user.username}} | <a href="{% url 'blog:logout' %}">Logout</a></li>

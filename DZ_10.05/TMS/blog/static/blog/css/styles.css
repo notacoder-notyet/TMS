@@ -61,12 +61,7 @@ a {
     font-style: italic;
 }
 
-.register {
-    text-align: center;
-    background: rgba(245, 245, 245, 0.6);
-} 
-
-.login {
+.register, .login, .create_post {
     text-align: center;
     background: rgba(245, 245, 245, 0.6);  
 }

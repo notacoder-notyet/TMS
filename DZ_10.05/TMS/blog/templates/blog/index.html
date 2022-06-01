@@ -10,7 +10,7 @@
           <p>{{ post.pub_date }}</p>
         </blockquote>
         <figcaption class="blockquote-footer">
-          <a href='#'>{{ post.author }}</a>
+          <a href='{% url 'blog:author_view' post.author_id %}'>{{ post.author }}</a>
         </figcaption>
       </figure>
       <hr>
