@@ -44,6 +44,7 @@ class EngineAdmin(admin.ModelAdmin):
         )
     search_fields = ('name', 'displacement', 'fuel_type')
 
+
 admin.site.register(CarBrand, CarBrandAdmin)
 admin.site.register(CarModel, CarModelAdmin)
 admin.site.register(Engine, EngineAdmin)

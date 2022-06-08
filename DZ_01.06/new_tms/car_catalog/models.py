@@ -12,6 +12,9 @@ class CarBaseModel(models.Model):
     def year_release(self):
         return self.model_yearsstrftime('%Y')
 
+    class Meta:
+        abstract = True
+
 
 class CarBrand(models.Model):
     name = models.CharField(max_length=50, unique=True)

@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 
-from .models import CarBaseModel, CarBrand, CarModel, Engine
+from .models import CarBrand, CarModel, Engine
+
 
 class CarBrandForm(ModelForm):
     class Meta:
@@ -10,11 +11,11 @@ class CarBrandForm(ModelForm):
 
 class CarModelForm(ModelForm):
     class Meta:
-        model = CarBrand
+        model = CarModel
         fields = '__all__'
 
 
 class EngineForm(ModelForm):
     class Meta:
-        model = CarBrand
+        model = Engine
         fields = '__all__'
