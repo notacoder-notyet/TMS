@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'car_catalog/base.html' %}
 
 {% block content %}
-    <a href='{% url 'car_catalog:brand_form'%}'>Add Brand</a>
+    <a href='{% url 'car_catalog:add_brand'%}'>Add Brand</a>
     <br>
-    <a href='{% url 'car_catalog:model_form' %}'>Add Model</a>
+    <a href='{% url 'car_catalog:add_model' %}'>Add Model</a>
     <br>
-    <a href='{% url 'car_catalog:engine_form' %}'>Add Engine</a>
+    <a href='{% url 'car_catalog:add_engine' %}'>Add Engine</a>
 {% endblock %}

@@ -32,6 +32,7 @@ class CarModelAdmin(admin.ModelAdmin):
 
     # def engine_fuel_type(self, obj):
     #     return obj.engine.fuel_type
+    # Из m2m не вытягиваються данные
 
     def engine(self, obj): # car_catalog.Engine.None в результате, почему не выяснилось
         return obj.engine

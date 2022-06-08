@@ -1,18 +1,27 @@
-from django.shortcuts import redirect, render
+from django.views.generic import ListView
+from django.views.generic.edit import FormView
 
-from .forms import *
+from .forms import CarBrandForm, CarModelForm, EngineForm
+from .models import CarModel
+
+class IndexView(ListView):
+    model = CarModel
+    template_name = 'car_catalog/index.html'
 
 
-def add_model(request):
-    if request.method == 'POST':
-        form = AddModelForm(request.POST)
-        if form.is_valid():
-                entry = form.save(commit=False)
-                entry.author = request.user
-                entry.save()
-                return redirect('/')
-        else:
-            form.add_error(None, 'Ошибка добавления поста')
-    else:
-        form = AddModelForm()
-    return render(request, 'blog/create_post.html', {'form':form})
+class CarBrandView(FormView):
+    template_name = 'car_catalog/brand_form.html'
+    form_class = CarBrandForm
+    success_url = '/'
+
+
+class CarModelView(FormView):
+    template_name = 'car_catalog/model_form.html'
+    form_class = CarModelForm
+    success_url = '/'
+
+
+class EngineView(FormView):
+    template_name = 'car_catalog/engine_form.html'
+    form_class = EngineForm
+    success_url = '/'
