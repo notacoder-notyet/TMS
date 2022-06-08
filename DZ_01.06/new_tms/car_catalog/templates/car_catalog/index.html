@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href='{% url 'car_catalog:brand_form'%}'>Add Brand</a>
+    <br>
+    <a href='{% url 'car_catalog:model_form' %}'>Add Model</a>
+    <br>
+    <a href='{% url 'car_catalog:engine_form' %}'>Add Engine</a>
+{% endblock %}

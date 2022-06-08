@@ -29,14 +29,14 @@ def create_post(request):
     if request.method == 'POST':
         form = CreatePostForm(request.POST)
         if form.is_valid():
-            try:
+
                 # Post.objects.create(**form.cleaned_data)
                 entry = form.save(commit=False)
                 entry.author = request.user
                 entry.save()
                 return redirect('home')
-            except:
-                form.add_error(None, 'Ошибка добавления поста')
+        else:
+            form.add_error(None, 'Ошибка добавления поста')
     else:
         form = CreatePostForm()
     return render(request, 'blog/create_post.html', {'form':form})
