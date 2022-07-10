@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class='register'>
+    <h1>Register</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% for f in form %}
+        <p><label class='form-label' for='{{ f.id_for_label }}' align='right'>{{ f.label }}: </label>{{ f }}</p>
+        <div class='form-error'>{{ f.erorrs }}</div>
+        {% endfor %}
+        <p><button type="submit">Create account</button></p>
+        <br>
+    </form>
+</div>
+{% endblock %}

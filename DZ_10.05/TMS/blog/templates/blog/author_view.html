@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>{{ post.author }}</h1>
+{% for post in object_list %}
+  <div class="author-post">
+      <hr>
+    <figure class="text-center">
+      <blockquote class="blockquote">
+        <h2><a href="{% url 'blog:post_view' post.pk %}">{{ post.name }}</a></h2>
+        <p>{{ post.pub_date }}</p>
+      </blockquote>
+    </figure>
+    <hr>
+{% endfor %}
+{% endblock content %}

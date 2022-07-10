@@ -1,0 +1,60 @@
+body {
+    background-image: url('images/1.jpg') no-repeat;
+    background-color: #b0aeb1;
+}
+
+.main {
+    color: #1dca34;
+    font-weight: bold;
+
+}
+
+.last {
+    color: #ffffff;
+    position: absolute;
+    right: 230px;
+    top: 5px;
+    padding: 5px;
+}
+
+ul li a {
+    color: #ffffff;
+    font-weight: bold;
+    width: 10.5%;
+    margin-right: 0.625%;
+    text-align: center;
+    line-height: 2;
+
+}
+
+button a {
+    color: #f80e0e;
+    font-weight: bold;
+}
+
+button {
+    background: #1dca34;
+}
+
+a {
+    text-decoration: none
+}
+
+.post-entry {
+    background: #1dca34;
+    color: #f80e0e;
+}
+
+.post-entry a {
+    color: #f80e0e;
+    font-weight: bold;
+}
+
+.post-entry a:hover {
+    color: orange;
+}
+
+.blockquote-footer a {
+    font-style: italic;
+}
+

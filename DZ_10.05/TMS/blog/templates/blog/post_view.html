@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="post-entry">
+    <figure class="text-center">
+      <blockquote class="blockquote">
+        <h1>{{ post.name }}</h1>
+        <p><h2>{{ post.text | linebreaks }}</h2></p>
+        <hr>
+        <p>{{ post.pub_date }}</p>
+      </blockquote>
+        <figcaption class="blockquote-footer">
+          <a href='{% url 'blog:author_view' post.author_id %}'>{{ post.author }}</a>
+        </figcaption>
+  </div>
+{% endblock content %}
