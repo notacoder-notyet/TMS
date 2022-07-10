@@ -9,13 +9,13 @@
                 <b>
                     <p class="name">
                         <a href="{{ url_for('member', member_id=member.id)}}">
-                            {{ member.firstname }} {{ member.lastname }}
+                            {{ member.first_name }} 
+                            {{ member.last_name }}
                         </a>
                     </p>
                 </b>
                 <p>{{ member.email }}</p>
                 <p>{{ member.age }} years old.</p>
-                <p>Joined: {{ member.created_at }}</p>
             </div>
         {% endfor %}
     </div>

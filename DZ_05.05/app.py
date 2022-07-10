@@ -20,26 +20,25 @@ from models import Member, Event, event_member
 
 @app.route('/')
 def index():
-    members = Member.query.all()
-    return render_template('index.html', members=members)
+    events = Event.query.all()
+    return render_template('index.html', events=events)
 
 
-@app.route('/аpply-to-<int:event_id>', methods=('GET', 'POST'), endpoint='apply')
+@app.route('/аpply', methods=('GET', 'POST'), endpoint='apply')
 def apply():
     if request.method == 'POST':
-        first_name = request.form['firstname']
-        last_name = request.form['lastname']
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
         email = request.form['email']
         age = int(request.form['age'])
-        member = Member(firstname=first_name,
-                          lastname=last_name,
+        member = Member(first_name=first_name,
+                          last_name=last_name,
                           email=email,
                           age=age)
-        # eventname = request.form['event']            
+        event_name = request.form['event_name']            
         db.session.add(member)
-        # event = db.session.query(Event).filter(Event.event_name == eventname).all()
-        
-        # event.membership.append(member)
+        event = db.session.query(Event).filter(Event.event_name == event_name).first()
+        member.membership.append(event)
         db.session.commit()
         return redirect(url_for('index'))
 
@@ -47,9 +46,15 @@ def apply():
 
 
 @app.route('/<int:member_id>', endpoint='member')
-def member_info(member_id):
+def member(member_id):
     member = Member.query.get_or_404(member_id)
     return render_template('member.html', member=member)
+
+
+@app.route('/members', endpoint='members')
+def member():
+    members = Member.query.all()
+    return render_template('members.html', members=members)
 
 
 @app.route('/event-info', endpoint='info')
