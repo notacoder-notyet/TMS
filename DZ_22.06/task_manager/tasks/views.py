@@ -9,7 +9,8 @@ from .permissions import IsOwnerOrReadOnly, IsAdminOrReadOnly
 class GlobalTaskViewSet(viewsets.ModelViewSet):
     queryset = GlobalTask.objects.all()
     serializer_class = GlobalTaskSerializer
-    permission_classes = (IsAdminOrReadOnly, )
+    # permission_classes = (IsAdminOrReadOnly, )
+    filterset_fields = ['status']
 
     def get_queryset(self):
         date = timezone.localdate()
@@ -17,10 +18,7 @@ class GlobalTaskViewSet(viewsets.ModelViewSet):
 
 
 class ObjectivesViewSet(viewsets.ModelViewSet):
-    # queryset = Objectives.objects.all()
+    queryset = Objectives.objects.filter(deadline__gte=timezone.localdate())
     serializer_class = ObjectivesSerializer
     # permission_classes = (IsOwnerOrReadOnly, )
-
-    def get_queryset(self):
-        date = timezone.localdate()
-        return super().get_queryset().filter(deadline__gte=date)
+    filterset_fields = ['status']
