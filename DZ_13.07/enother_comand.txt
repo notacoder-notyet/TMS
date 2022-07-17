@@ -1,0 +1,3 @@
+Migrations is TO-DO
+alembic revision --autogenerate -m 'Add models'
+alembic upgrade heads
