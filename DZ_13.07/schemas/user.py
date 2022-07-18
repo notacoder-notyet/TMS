@@ -2,29 +2,28 @@ import datetime
 from typing import List, Optional
 from pydentic import BaseModel, EmailStr, validator, constr
 
-from review import Review
+from .review import Review
 
-class User(BaseModel):
-    id: Optional[str] = None
+class BaseUser(BaseModel):
     email: EmailStr
     nickname: str
-    hashed_password: str
     phone_number: int
-    raiting: float
     is_landlord: bool
+
+
+class User(BaseUser):
+    id: Optional[str] = None
+    hashed_password: str
+    raiting: float
     your_feedback: List[Review] = []
     feedback_about_you: List[Review] = []
     created_at: datetime.datetime
     updated_at: datetime.datetime
 
 
-class UserIn(BaseModel):
-    email: EmailStr
-    nickname: str
+class UserIn(BaseUser):
     password: constr(min_lenght=8)
     password2: str
-    phone_number: int
-    is_landlord: bool = False
 
     @validator('password2')
     def password_match(cls, v, values, **kwargs):

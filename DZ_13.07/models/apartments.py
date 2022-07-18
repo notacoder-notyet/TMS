@@ -12,23 +12,11 @@ from sqlalchemy import (
 from sqlalchemy.orm import relationship
 
 from db.base import Base, metadata
-from users import User
+from enums.enums import AmenitiesEnum
 
-
-class Building(Base):
-    __tablename__ = 'buildings'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    address = Column(String(100), unique=True)
-    year = Column(Integer)
-    floors = Column(Integer)
-    elevator = Column(Boolean)
-    MTA = Column(Integer)
-
-    apartment = relationship('Apartment', back_populates="building")
-
-    def __repr__(self) -> str:
-        return f'<Building {self.address}>'
-
+from .buildings import Building
+from .reviews import Review
+from .users import User
 
 class Apartment(Base):
     __tablename__ = 'apartments'
@@ -40,12 +28,14 @@ class Apartment(Base):
     floor = Column(Integer)
     rooms = Column(Integer)
     pet_friendly = Column(Boolean)
-    amenities = Column(Enum)
+    amenities = Column(Enum(AmenitiesEnum))
     owner_id = Column(Integer, ForeignKey('users.id'))
     added_at = Column(DateTime, default=datetime.datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.datetime.utcnow)
     
     building = relationship('Building', back_populates="apartments")
     owner = relationship('User', back_populates="apartments")
+    reviews = relationship('Review', back_populates='reviews')
 
     def __repr__(self) -> str:
         return f'<Building {self.building_id.address}>'

@@ -17,7 +17,7 @@ def generate_uuid():
 
 class User(Base):
     __tablename__ = 'users'
-    #metadata
+    #metadata?
     id = Column(Integer, primary_key=True, autoincrement=True, default=generate_uuid)
     email = Column(String, unique=True)
     nickname = Column(String, unique=True)

@@ -1,12 +1,15 @@
-from sys import prefix
 from fastapi import FastAPI
 import uvicorn
 
 from db.base import database
-from endpoints import users
+from endpoints import users, auth, apartments, buildings, reviews
 
 app = FastAPI(title='Rent apartments')
 app.include_router(users.router, prefix='/users', tags=['users'])
+app.include_router(auth.router, prefix='/auth', tags=['auth'])
+app.include_router(apartments.router, prefix='/apartments', tags=['apartments'])
+app.include_router(buildings.router, prefix='/buildings', tags=['buildings'])
+app.include_router(reviews.router, prefix='/reviews', tags=['reviews'])
 
 @app.on_event('startup')
 async def startup():

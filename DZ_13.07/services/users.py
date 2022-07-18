@@ -1,5 +1,4 @@
 import datetime
-import imp
 from typing import List, Optional
 
 from models.users import User as UserModel
@@ -13,7 +12,7 @@ class UserServices(BaseServices):
         return await self.database.fetch_all(query=query)
 
     async def get_by_id(self, id: int) -> Optional[User]:
-        query = UserModel.select().where(UserModel.c.id==id).first()
+        query = UserModel.select().where(UserModel.c.id==id)
         user = await self.database.fetch_one(query)
         if user is None:
             return None
@@ -21,6 +20,7 @@ class UserServices(BaseServices):
 
     async def create(self, u: UserIn) -> User:
         user = User(
+            id=0,
             nickname=u.nickname,
             email=u.email,
             hashed_password=hash_password(u.password),
@@ -32,7 +32,7 @@ class UserServices(BaseServices):
         values = {**user.dict()}
         values.pop('id', None)
         query = UserModel.insert().values(**values)
-        user.id = await self.database.execut(query)
+        user.id = await self.database.execute(query)
         return user
 
     async def update(self, id: int, u: UserIn) -> User:
@@ -46,14 +46,14 @@ class UserServices(BaseServices):
             updated_at=datetime.datetime.utcnow(),
         )
         values = {**user.dict()}
-        values.pop('created_at', None)
         values.pop('id', None)
+        values.pop('created_at', None)
         query = UserModel.update().where(UserModel.c.id==id).values(**values)
-        await self.database.execut(query)
+        await self.database.execute(query)
         return user
 
-    async def get_by_email(self, mail: str) -> Optional[User]:
-        query = UserModel.select().where(UserModel.c.email==email).first()
+    async def get_by_email(self, email: str) -> Optional[User]:
+        query = UserModel.select().where(UserModel.c.email==email)
         user = await self.database.fetch_one(query)
         if user is None:
             return None
