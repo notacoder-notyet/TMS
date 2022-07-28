@@ -1,35 +1,44 @@
 import datetime
-from typing import List
+from typing import Optional
 from pydantic import BaseModel, conint, constr
 
 from enums.enums import AmenitiesEnum
 
-from .building import Building
-from .review import Review
-from .user import User
 
-class BaseApartment(BaseModel): #абстрактный класс?
-    pet_friendly: bool
-    amenities: AmenitiesEnum
-    building: List[Building] = []
+class BaseApartment(BaseModel):
+    '''Костыль с optional, т.к. с orm_mode = True плевалась ошибками
+     на каждое поле:
+    `pydantic.error_wrappers.ValidationError: 12 validation errors for Apartment
+    response -> pet_friendly
+    field required (type=value_error.missing)
+    и остальные 11...`
+    А c False то же, только value_error.dict однократно
+    '''
+    pet_friendly: Optional[bool]
+    amenities: Optional[AmenitiesEnum]
+    building_id: Optional[int]
+
 
 class Apartment(BaseApartment):
-    id: int
-    price: int
-    square: int
-    description: str
-    floor: int
-    rooms: int
-    owner: List[User] = []
-    building_id: int
-    owner_id: int
-    added_at: datetime.datetime
-    updated_at: datetime.datetime
-    reviews: List[Review] = []
+    id: Optional[int] = None
+    price: Optional[conint(ge=1)]
+    square: Optional[conint(ge=15, le=255)]
+    description: Optional[constr(max_length=500)]
+    floor: Optional[conint(ge=1, le=33)]
+    rooms: Optional[conint(ge=1, le=10)]
+    owner_id: Optional[int]
+    added_at: Optional[datetime.datetime]
+    updated_at: Optional[datetime.datetime]
+
+    class Config:
+        orm_mode = True
+
 
 class ApartmentIn(BaseApartment):
     price: conint(ge=1)
     square: conint(ge=15, le=255)
-    description: constr(max_lenght=500)
+    description: constr(max_length=500)
     floor: conint(ge=1, le=33)
     rooms: conint(ge=1, le=10)
+
+

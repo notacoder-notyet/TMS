@@ -11,17 +11,15 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import relationship
 
-from db.base import Base, metadata
+from db.base import Base
 from enums.enums import AmenitiesEnum
 
-from .buildings import Building
-from .reviews import Review
-from .users import User
 
-class Apartment(Base):
+class ApartmentModel(Base):
     __tablename__ = 'apartments'
     id = Column(Integer, primary_key=True, autoincrement=True)
     building_id = Column(Integer, ForeignKey('buildings.id'))
+    owner_id = Column(Integer, ForeignKey('users.id'))
     price = Column(Integer)
     square = Column(Integer)
     description = Column(Text(500))
@@ -29,13 +27,12 @@ class Apartment(Base):
     rooms = Column(Integer)
     pet_friendly = Column(Boolean)
     amenities = Column(Enum(AmenitiesEnum))
-    owner_id = Column(Integer, ForeignKey('users.id'))
     added_at = Column(DateTime, default=datetime.datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.datetime.utcnow)
     
-    building = relationship('Building', back_populates="apartments")
-    owner = relationship('User', back_populates="apartments")
-    reviews = relationship('Review', back_populates='reviews')
+    building = relationship('BuildingModel', back_populates='apartments', foreign_keys='ApartmentModel.building_id')
+    owner = relationship('UserModel', back_populates='apartments', foreign_keys='ApartmentModel.owner_id')
+    reviews = relationship('ReviewModel', back_populates='apartment', viewonly=True)
 
     def __repr__(self) -> str:
         return f'<Building {self.building_id.address}>'

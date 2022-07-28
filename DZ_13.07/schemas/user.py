@@ -1,31 +1,30 @@
 import datetime
-from typing import List, Optional
-from pydentic import BaseModel, EmailStr, validator, constr
+from typing import Optional
+from pydantic import BaseModel, EmailStr, validator, constr
 
-from .review import Review
 
 class BaseUser(BaseModel):
     email: EmailStr
     nickname: str
     phone_number: int
-    is_landlord: bool
+    is_landlord: bool = False
 
 
 class User(BaseUser):
-    id: Optional[str] = None
-    hashed_password: str
-    raiting: float
-    your_feedback: List[Review] = []
-    feedback_about_you: List[Review] = []
+    id: Optional[int] = None
+    # password: Optional[str]
+    raiting: Optional[float]
     created_at: datetime.datetime
     updated_at: datetime.datetime
 
+    class Config:
+        orm_mode = True
+
 
 class UserIn(BaseUser):
-    password: constr(min_lenght=8)
-    password2: str
+    password: constr(min_length=8)
 
-    @validator('password2')
+    @validator('password')
     def password_match(cls, v, values, **kwargs):
         if 'password' in values and v != values['password']:
             raise ValueError("Password don't match")

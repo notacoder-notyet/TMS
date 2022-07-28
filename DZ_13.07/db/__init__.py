@@ -1,6 +1,4 @@
 from .base import Base, engine, metadata
-from models.apartments import Apartment, Building
-from models.reviews import Review
-from models.users import User
+from models import apartments, buildings, reviews, users
 
 Base.metadata.create_all(bind=engine)

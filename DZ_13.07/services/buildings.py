@@ -1,55 +1,43 @@
+from distutils.command.build import build
 from fastapi import HTTPException, status
 from typing import List, Optional
+from sqlalchemy import select, delete, update
 
-from models.buildings import Building as BuildingModel
+from models.buildings import BuildingModel
 from schemas.building import Building, BuildingIn
 from .base import BaseServices
 
+
 class BuildingServices(BaseServices):
 
-    exc_not_found = HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Building not found')
-
-    async def create(self, b: BuildingIn) -> Building:
-        building = Building(
-            id=0,
-            address=b.address,
-            elevator=b.elevator,
-            year=b.year,
-            floors=b.floors,
-            MTA=b.MTA,
-        )
-        values = {**building.dict()}
-        values.pop('id', None)
-        query = building.insert().values(**values)
-        building.id = await self.database.execute(query=query)
+    async def create(self, db, schema: BuildingIn) -> Building:
+        building = BuildingModel(**schema.dict())
+        db.add(building)
+        db.commit()
+        db.refresh(building)
         return building
 
-    async def update(self, id: int, b: BuildingIn) -> Building:
-        building = Building(
-            id=id,
-            address=b.address,
-            elevator=b.elevator,
-            year=b.year,
-            floors=b.floors,
-            MTA=b.MTA,
-        )
-        values = {**building.dict()}
-        values.pop('id', None)
-        values.pop('added_at', None)
-        query = BuildingModel.update().where(BuildingModel.c.id==id).values(**values)
-        await self.database.execute(query=query)
+
+    async def update(self, schema: BuildingIn, id: int) -> Building: # Осилил асинк БД на 50%, без async_engine и пр.
+        query = update(BuildingModel).where(BuildingModel.id==id).values(**schema.dict())
+        building = await self.database.execute(query=query)
         return building
+
 
     async def get_all(self, limit: int = 100, skip: int = 0) -> List[Building]:
-        query = BuildingModel.select().limit(limit).offset(skip)
-        return await self.database.fetch_all(query=query)
+        query = select(BuildingModel).limit(limit).offset(skip)
+        get_buildings = await self.database.fetch_all(query=query)
+        return get_buildings
+
 
     async def delete(self, id: int):
-        query = BuildingModel.delete().where(BuildingModel.c.id==id)
-        return await self.database.execute(query=query)
+        query = delete(BuildingModel).where(BuildingModel.id==id)
+        building_delete = await self.database.execute(query=query)
+        return building_delete
+
 
     async def get_by_id(self, id: int) -> Optional[Building]:
-        query = BuildingModel.select().where(BuildingModel.c.id==id)
+        query = select(BuildingModel).where(BuildingModel.id==id)
         building = await self.database.fetch_one(query=query)
         if building is None:
             return None

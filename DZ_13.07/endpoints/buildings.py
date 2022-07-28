@@ -1,12 +1,15 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
 
 from schemas.building import Building, BuildingIn
 from schemas.user import User
 from services.buildings import BuildingServices
-from .depends import get_building_services, get_current_user
+from .depends import get_building_services, get_current_user, get_db
 
 router = APIRouter()
+
+exc_not_found = HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Building not found')
 
 @router.get('/', response_model=List[Building])
 async def read_buildings(
@@ -14,26 +17,32 @@ async def read_buildings(
     skip: int = 0,
     buildings: BuildingServices = Depends(get_building_services)
 ):
-    return await buildings.get_all(limit=limit, skip=skip)
+    get_buildings = await buildings.get_all(limit=limit, skip=skip)
+    return get_buildings
+
 
 @router.post('/', response_model=Building)
 async def create_building(
-    id: int,
-    b: BuildingIn,
+    schema: BuildingIn,
     buildings: BuildingServices = Depends(get_building_services),
+    db: Session = Depends(get_db)
 ):
-    return await buildings.create(b)
+    building = await buildings.create(db, schema)
+    return building
+
 
 @router.put('/', response_model=Building)
 async def update_building(
+    schema: BuildingIn,
     id: int,
-    b: BuildingIn,
     buildings: BuildingServices = Depends(get_building_services)
 ):
     building = await buildings.get_by_id(id=id)
     if building is None:
         raise exc_not_found
-    return await buildings.update(id=id, b=b)
+    building = await buildings.update(schema, id)
+    return building
+
 
 @router.delete('/')
 async def delete_building(

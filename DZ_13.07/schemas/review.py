@@ -1,38 +1,35 @@
 import datetime
-from typing import List
+from typing import Optional
 from pydantic import BaseModel, constr
 
 from enums.enums import ScoreEnum
 
-from .apartment import Apartment
-from .user import User
 
+class BaseReview(BaseModel):
+    review: constr(max_length=500)
 
-class Review(BaseModel):
-    id: int
-    apartment_id: int
-    review: str
-    is_landlord: bool
-    renter_score: ScoreEnum
-    apartment_score: ScoreEnum
+class Review(BaseReview):
+    id: Optional[int] = None
     user_id: int
-    renter_id: int
-    added_at: datetime.datetime
+    is_landlord: Optional[bool]
+    apartment_id: Optional[int]
+    apartment_score: Optional[ScoreEnum]
+    renter_id: Optional[int]
+    renter_score: Optional[ScoreEnum]
+    added_at: Optional[datetime.datetime]
     updated_at: datetime.datetime
-    apartment: List[Apartment] = []
-    your_user: List[User] = []
-    renter: List[User] = []
+
+    class Config:
+        orm_mode = True
 
 
-class RenterReview(BaseModel):
-    review: constr(max_lenght=500)
+class RenterReview(BaseReview):
     apartment_score: ScoreEnum
-    apartment: List[Apartment] = []
+    apartment_id: int
     is_landlord: bool = False
 
 
-class LandlordReview(BaseModel):
-    review: constr(max_lenght=500)
+class LandlordReview(BaseReview):
     renter_score: ScoreEnum
-    renter: List[User] = []
+    renter_id: int
     is_landlord: bool = True
