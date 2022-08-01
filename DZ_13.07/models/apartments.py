@@ -4,6 +4,7 @@ from sqlalchemy import (
     Column,
     DateTime,
     Enum,
+    Float,
     ForeignKey,
     Integer,
     Text,
@@ -12,7 +13,7 @@ from sqlalchemy import (
 from sqlalchemy.orm import relationship
 
 from db.base import Base
-from enums.enums import AmenitiesEnum
+from enums.enums import AmenitiesEnum, StatusEnum
 
 
 class ApartmentModel(Base):
@@ -27,12 +28,16 @@ class ApartmentModel(Base):
     rooms = Column(Integer)
     pet_friendly = Column(Boolean)
     amenities = Column(Enum(AmenitiesEnum))
+    status = Column(Enum(StatusEnum))
+    raiting = Column(Float, nullable=True)
+    renter_id = Column(Integer, ForeignKey('users.id'), nullable=True)
     added_at = Column(DateTime, default=datetime.datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.datetime.utcnow)
     
-    building = relationship('BuildingModel', back_populates='apartments', foreign_keys='ApartmentModel.building_id')
-    owner = relationship('UserModel', back_populates='apartments', foreign_keys='ApartmentModel.owner_id')
-    reviews = relationship('ReviewModel', back_populates='apartment', viewonly=True)
+    building = relationship('BuildingModel', foreign_keys='ApartmentModel.building_id') #, back_populates='apartments'
+    owner = relationship('UserModel', foreign_keys='ApartmentModel.owner_id') #, back_populates='your_apartments'
+    renter = relationship('UserModel', foreign_keys='ApartmentModel.renter_id') #, back_populates='rented_apartments'
+    # reviews = relationship('ReviewModel', back_populates='apartment', viewonly=True)
 
     def __repr__(self) -> str:
         return f'<Building {self.building_id.address}>'

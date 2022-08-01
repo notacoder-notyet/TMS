@@ -16,3 +16,10 @@ class AmenitiesEnum(Enum):
     balcony = 'Balcony'
     janitor = 'Janitor'
     parking_space = 'Parking space'
+
+
+class StatusEnum(Enum):
+    freely = 'Freely'
+    booked = 'Booked'
+    rented = 'Rented'
+

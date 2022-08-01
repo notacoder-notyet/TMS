@@ -1,5 +1,5 @@
-from http.client import HTTPException
 from fastapi import APIRouter, Depends, HTTPException, status
+from http.client import HTTPException
 
 from core.security import verify_password, create_access_token
 from schemas.token import Token, Login

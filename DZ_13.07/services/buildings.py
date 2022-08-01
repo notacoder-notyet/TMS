@@ -26,14 +26,14 @@ class BuildingServices(BaseServices):
 
     async def get_all(self, limit: int = 100, skip: int = 0) -> List[Building]:
         query = select(BuildingModel).limit(limit).offset(skip)
-        get_buildings = await self.database.fetch_all(query=query)
-        return get_buildings
+        buildings = await self.database.fetch_all(query=query)
+        return buildings
 
 
     async def delete(self, id: int):
         query = delete(BuildingModel).where(BuildingModel.id==id)
-        building_delete = await self.database.execute(query=query)
-        return building_delete
+        deleted_building = await self.database.execute(query=query)
+        return deleted_building
 
 
     async def get_by_id(self, id: int) -> Optional[Building]:
@@ -41,4 +41,4 @@ class BuildingServices(BaseServices):
         building = await self.database.fetch_one(query=query)
         if building is None:
             return None
-        return Building.parse_obj(building)
+        return building

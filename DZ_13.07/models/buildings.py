@@ -20,7 +20,7 @@ class BuildingModel(Base):
     elevator = Column(Boolean, nullable=True)
     MTA = Column(Float, nullable=True)
 
-    apartments = relationship('ApartmentModel', back_populates='building', viewonly=True)
+    # apartments = relationship('ApartmentModel', back_populates='building', viewonly=True)
 
     def __repr__(self) -> str:
         return f'<Building {self.address}>'

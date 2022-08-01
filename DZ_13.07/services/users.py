@@ -6,7 +6,6 @@ from models.users import UserModel
 from schemas.user import User, UserIn
 from core.security import hash_password
 from .base import BaseServices
-# from db.base import db
 
 
 class UserServices(BaseServices):
@@ -51,4 +50,4 @@ class UserServices(BaseServices):
         user = await self.database.fetch_one(query)
         if user is None:
             return None
-        return User.parse_obj(user)
+        return user

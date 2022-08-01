@@ -23,13 +23,13 @@ class Review(BaseReview):
         orm_mode = True
 
 
-class RenterReview(BaseReview):
-    apartment_score: ScoreEnum
-    apartment_id: int
-    is_landlord: bool = False
-
-
 class LandlordReview(BaseReview):
     renter_score: ScoreEnum
     renter_id: int
     is_landlord: bool = True
+
+
+class RenterReview(BaseReview):
+    apartment_score: ScoreEnum
+    apartment_id: int
+    is_landlord: bool = False

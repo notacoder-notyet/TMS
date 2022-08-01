@@ -1,9 +1,11 @@
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, status
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from services.users import UserServices
+
 from schemas.user import User, UserIn
+from services.notification import send_notification
+from services.users import UserServices
 from .depends import get_user_services, get_current_user, get_db
 
 
@@ -22,24 +24,17 @@ async def read_users(
 @router.post('/', response_model=User)
 async def create_user(
     schema: UserIn,
+    background_tasks: BackgroundTasks,
     user_service: UserServices = Depends(get_user_services),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
     user = await user_service.create(db, schema)
+    background_tasks.add_task(
+        send_notification,
+        email=user.email,
+        message=f"Hello {user.nickname}, Welcome!"
+    )
     return user
-#   if user:
-#         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-#                             detail='User already exists.')
-
-#     else:
-#         user = await create_user(db, schema)
-
-#     background_tasks.add_task(
-#         write_notification,
-#         email=user.email,
-#         message=f"Hello {user.username}, Welcome!"
-#     )
-#     return user
 
 
 @router.put('/', response_model=User)

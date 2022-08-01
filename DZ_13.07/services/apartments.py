@@ -14,6 +14,7 @@ class ApartmentServices(BaseServices):
     async def create(self, schema: ApartmentIn, owner_id: int) -> Apartment:
         data = schema.dict()
         data['owner_id'] = owner_id
+        data['status'] = 'Freely'
         data['added_at'] = datetime.datetime.utcnow()
         data['updated_at'] = datetime.datetime.utcnow()
         query = insert(ApartmentModel).values(**data)
@@ -31,14 +32,14 @@ class ApartmentServices(BaseServices):
 
     async def get_all(self, limit: int = 100, skip: int = 0) -> List[Apartment]:
         query = select(ApartmentModel).limit(limit).offset(skip)
-        get_apartments = await self.database.fetch_all(query=query)
-        return get_apartments
+        apartments = await self.database.fetch_all(query=query)
+        return apartments
 
 
     async def delete(self, id: int):
         query = delete(ApartmentModel).where(ApartmentModel.id==id)
-        apartment_delete = await self.database.execute(query=query)
-        return apartment_delete
+        deleted_apartment = await self.database.execute(query=query)
+        return deleted_apartment
 
 
     async def get_by_id(self, id: int) -> Optional[Apartment]:
@@ -46,4 +47,16 @@ class ApartmentServices(BaseServices):
         apartment = await self.database.fetch_one(query=query)
         if apartment is None:
             return None
-        return Apartment.parse_obj(apartment)
+        return apartment
+
+
+    async def reservation(self, apartment_for_booking, renter_id: int):
+        setattr(apartment_for_booking, 'renter_id', renter_id)
+        setattr(apartment_for_booking, 'status', 'Booked')
+        apartment = await self.database.execute(apartment_for_booking)
+        return apartment
+
+    async def rental_confirmation(self, apartment):
+        setattr(apartment, 'status', 'Rented')
+        apartment = await self.database.execute(apartment)
+        return apartment

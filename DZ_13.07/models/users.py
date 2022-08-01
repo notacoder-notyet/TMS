@@ -37,9 +37,10 @@ class UserModel(Base):
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.datetime.utcnow)
 
-    apartments = relationship('ApartmentModel',  back_populates='owner', viewonly=True)
-    your_reviews = relationship('ReviewModel', back_populates='your_user', foreign_keys='ReviewModel.user_id', viewonly=True)
-    reviews_about = relationship('ReviewModel', back_populates='user', foreign_keys='ReviewModel.user_id', viewonly=True)
+    # your_apartments = relationship('ApartmentModel',  back_populates='owner', viewonly=True)
+    # rented_apartments = relationship('ApartmentModel',  back_populates='renter', viewonly=True)
+    # your_reviews = relationship('ReviewModel', back_populates='your_user', viewonly=True)
+    # reviews_about = relationship('ReviewModel', back_populates='user', viewonly=True)
 
     def __repr__(self) -> str:
         return f'<User {self.nickname}>'

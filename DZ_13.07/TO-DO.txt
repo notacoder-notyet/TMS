@@ -2,33 +2,69 @@ Migrations is TO-DO
 alembic revision --autogenerate -m 'Add models'
 alembic upgrade heads
 
+Вопросы
 
-
--Не работают связи, могу создать отзыв о апартаментах, которых нет.
+???---Надо ли разбить на разные эндпоинты RenterReview&LandlordReview? Как быть с гет_ал?
+???---Сработают ли операции подсчета и записи если запись в БД была удалена выше в review_delete?
+???---Сделать рабочий Boolean. Сейчас не записывает в БД. Глючит StatusEnum, в отличии
+от других. Как их записывать в setattr, dict и при создании объекта.
+Ошибка при работе с апартаментами:
+```LookupError: 'Freely' is not among the defined enum values.
+Enum name: statusenum. Possible values: freely, booked, rented```
+???---Отзыв о рентере может писать, менять и удалять только землевладелец и наоборот
+Создание апартаментов и строения только для лэндлорда.
+Делать только после фикса Bool полей в БД
+???---Не работают связи, могу создать отзыв о апартаментах, которых нет.
 Т.е. задать несуществующий id.
--Перейти на один вариант исполнения связи с бд как в user или как
-в Review.
--Добавить статус бронирования и кем забронированно.
-Так же реализовать функцию.
--Возможно изменить отзыв о рентере через отзыв лэндлорда, просто
-заполняються пустые поля. Разбить отзывы на две таблицы.
--Сделать валидацию, что бы не было отзывов от одного юзера на одни и те
+???---Сделать валидацию, что бы не было отзывов от одного юзера на одни и те
 же апартаменты.
--Фильтрация(filter).
--UUID.
--Background Task. Send email massage about of SignUp.
--Написать функцию для подсчёта рейтинга. Добавить ее в конце CRUD
-операций с отзывами, чтоб вместе с подсчетом обновлялось значение в БД
-type. if user.raiting == все оценки с отзывов по curent_user.id
-вернуть объект
-else:
-execut соответствующего поля.
--Сделать рабочий Boolean. Сейчас не записывает в БД.
--Добавить возможность добавлять апа
--Разобраться с pydantic'ом. При включенном орм_моде шлет:
+???---Разобраться с pydantic'ом. При включенном орм_моде шлет:
 pydantic.type = value_error.missing на каждое поле. При выключеном
-value_error.dict.
--Создание апартаментов и строения только для лэндлорда.
--Отзыв о рентере может писать, менять и удалять только землевладелец и наоборот.
--Внедрить дз с чатом.
--Работа над ошибками, работа и еще работа....
+value_error.dict однократно \_'-'_/
+---Перейти на один вариант исполнения связи с бд как в user или как
+в Review.
+---Перелопатить схему Review, reviews.get_all
+---Фильтрация(filter).
+---UUID.
+---В чем суть Схема.parse_obj(объект) для get_by_id
+---Работа над ошибками, работа и еще работа....
+
+!!!Ошибки при реализации связей в БД OneToMany, с relationship в обе стороны:
+
+sqlalchemy.exc.AmbiguousForeignKeysError: Could not determine
+join condition between parent/child tables on relationship
+UserModel.your_apartments - there are multiple foreign key
+paths linking the tables.  !Specify the 'foreign_keys' argument,
+providing a list of those columns which should be counted as 
+containing a foreign key reference to the parent table.!
+
+    raise exc.AmbiguousForeignKeysError(
+sqlalchemy.exc.AmbiguousForeignKeysError: Can't determine 
+join between 'users' and 'apartments'; tables have more than 
+one foreign key constraint relationship between them. Please 
+specify the !'on clause'! of this join explicitly.
+
+The above exception was the direct cause of the following exception:
+
+SAWarning: relationship 'ReviewModel.user' will copy column
+users.id to column reviews.user_id, which conflicts with 
+relationship(s): 'ReviewModel.your_user' (copies users.id 
+to reviews.user_id). If this is not the intention, consider
+if these relationships should be linked with back_populates,
+or if viewonly=True should be applied to one or more if they
+are read-only. For the less common case that foreign key
+constraints are partially overlapping, the orm.foreign()
+annotation can be used to isolate the columns that should
+be written towards.   To silence this warning, add the parameter
+!'overlaps="your_user"'! to the 'ReviewModel.user' relationship.
+(Background on this error at: https://sqlalche.me/e/14/qzyx)
+
+
+
+
+✓-Добавить статус бронирования и кем забронированно.
+✓Так же реализовать функцию.
+✓-Background Task. Send email massage about of SignUp. Email об броинровании и подтверждение
+✓-Написать функцию для подсчёта рейтинга. Добавить ее в конце CRUD
+✓операций с отзывами, чтоб вместе с подсчетом обновлялось значение в БД
+✓-Внедрить дз с чатом.

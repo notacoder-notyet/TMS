@@ -2,7 +2,7 @@ import datetime
 from typing import Optional
 from pydantic import BaseModel, conint, constr
 
-from enums.enums import AmenitiesEnum
+from enums.enums import AmenitiesEnum, StatusEnum
 
 
 class BaseApartment(BaseModel):
@@ -27,6 +27,9 @@ class Apartment(BaseApartment):
     floor: Optional[conint(ge=1, le=33)]
     rooms: Optional[conint(ge=1, le=10)]
     owner_id: Optional[int]
+    status: Optional[StatusEnum]
+    raiting: Optional[float]
+    renter_id: Optional[int]
     added_at: Optional[datetime.datetime]
     updated_at: Optional[datetime.datetime]
 
@@ -40,5 +43,3 @@ class ApartmentIn(BaseApartment):
     description: constr(max_length=500)
     floor: conint(ge=1, le=33)
     rooms: conint(ge=1, le=10)
-
-
