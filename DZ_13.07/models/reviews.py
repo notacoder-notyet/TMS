@@ -3,6 +3,7 @@ from sqlalchemy import (
     Boolean,
     Column,
     DateTime,
+    Enum,
     ForeignKey,
     Integer,
     Text,
@@ -10,24 +11,41 @@ from sqlalchemy import (
 from sqlalchemy.orm import relationship
 
 from db.base import Base
-from apartments import Apartment
-from users import User
+from enums.enums import ScoreEnum
 
-class Review(Base):
-    __tablename__ = 'reviews'
+
+class ReviewBaseModel(Base):
+    __abstract__ = True
+
     id = Column(Integer, primary_key=True, autoincrement=True, unique=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
     is_landlord = Column(Boolean)
-    apartments_id = Column(Integer, ForeignKey("apartments.id"))
     review = Column(Text)
-    renter_score = Column(Integer)
-    apartment_score = Column(Integer)
-    your_user_id = Column(Integer, ForeignKey("users.id"))
-    him_user_id = Column(Integer, ForeignKey("users.id"))
     added_at = Column(DateTime, default=datetime.datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.datetime.utcnow)
 
-    apartments = relationship('Apatment',  back_populates="reviews")
-    your_user = relationship('User', back_populates="reviews")
-    him_user = relationship('User', back_populates="reviews")
+    your_user = relationship('UserModel', foreign_keys='ReviewModel.user_id') #, back_populates='your_reviews'
+
+
+class LandlordReviewModel(ReviewBaseModel):
+    __tablename__ = 'landlord_reviews'
+
+    score = Column(Enum(ScoreEnum), nullable=True)
+    renter_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+
+    user = relationship('UserModel', foreign_keys='ReviewModel.user_id') #, back_populates='reviews_about'
 
     def __repr__(self) -> str:
-        return f'<From {self.your_user_id.nickname} to {self.him_user_id.nickname}>'
+        return f'<From {self.user_id.nickname} to {self.renter_id.nickname}>'
+
+
+class RenterReviewModel(ReviewBaseModel):
+    __tablename__ = 'renter_reviews'
+
+    score = Column(Enum(ScoreEnum), nullable=True)
+    apartment_id = Column(Integer, ForeignKey("apartments.id"), nullable=True)
+
+    apartment = relationship('ApartmentModel', foreign_keys='ReviewModel.apartment_id') #,  back_populates='reviews'
+
+    def __repr__(self) -> str:
+        return f'<From {self.user_id.nickname} to {self.apartment_id.building_id.address}>'
