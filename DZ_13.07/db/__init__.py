@@ -1,4 +1,4 @@
-from .base import Base, engine, metadata
-from models import apartments, buildings, reviews, users
+# from .base import Base, engine, metadata
+# from models import apartments, buildings, reviews, users
 
-Base.metadata.create_all(bind=engine)
+# Base.metadata.create_all(bind=engine)

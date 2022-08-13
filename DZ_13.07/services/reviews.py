@@ -35,10 +35,10 @@ class ReviewServices(BaseServices):
         return review
 
 
-    async def get_all(self, limit: int = 100, skip: int = 0) -> List[Review]:
-        query = select(ReviewModel).limit(limit).offset(skip)
-        reviews = await self.database.fetch_all(query=query)
-        return reviews
+    # async def get_all(self, limit: int = 100, skip: int = 0) -> List[Review]:
+    #     query = select(ReviewModel).limit(limit).offset(skip)
+    #     reviews = await self.database.fetch_all(query=query)
+    #     return reviews
 
  
     async def get_by_id(self, model, id: int) -> Review:

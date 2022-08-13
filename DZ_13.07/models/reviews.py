@@ -24,12 +24,7 @@ class ReviewBaseModel(Base):
     added_at = Column(DateTime, default=datetime.datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.datetime.utcnow)
 
-    apartment = relationship('ApartmentModel', foreign_keys='ReviewModel.apartment_id') #,  back_populates='reviews'
     your_user = relationship('UserModel', foreign_keys='ReviewModel.user_id') #, back_populates='your_reviews'
-    user = relationship('UserModel', foreign_keys='ReviewModel.user_id') #, back_populates='reviews_about'
-
-    def __repr__(self) -> str:
-        return f'<From {self.user_id.nickname} to {self.him_user_id.nickname}>'
 
 
 class LandlordReviewModel(ReviewBaseModel):
@@ -38,9 +33,19 @@ class LandlordReviewModel(ReviewBaseModel):
     score = Column(Enum(ScoreEnum), nullable=True)
     renter_id = Column(Integer, ForeignKey("users.id"), nullable=True)
 
+    user = relationship('UserModel', foreign_keys='ReviewModel.user_id') #, back_populates='reviews_about'
+
+    def __repr__(self) -> str:
+        return f'<From {self.user_id.nickname} to {self.renter_id.nickname}>'
+
 
 class RenterReviewModel(ReviewBaseModel):
     __tablename__ = 'renter_reviews'
 
     score = Column(Enum(ScoreEnum), nullable=True)
     apartment_id = Column(Integer, ForeignKey("apartments.id"), nullable=True)
+
+    apartment = relationship('ApartmentModel', foreign_keys='ReviewModel.apartment_id') #,  back_populates='reviews'
+
+    def __repr__(self) -> str:
+        return f'<From {self.user_id.nickname} to {self.apartment_id.building_id.address}>'
